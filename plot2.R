@@ -1,0 +1,8 @@
+data <- read.table("household_power_consumption.txt", header = T, sep = ";", na.strings = "?", colClasses = "character")
+subdata <- subset(data, Date == "1/2/2007" | Date == "2/2/2007")
+subdata$MergedDate <- strptime(paste(subdata$Date, subdata$Time), "%d/%m/%Y %H:%M:%S")
+subdata$Date <- as.Date(subdata$Date, format = "%d/%m/%Y")
+subdata$Global_active_power <- as.numeric(subdata[,"Global_active_power"])
+with(subdata, plot(MergedDate, Global_active_power, type = "l", xlab ="" , ylab = "Global Active Power (kilowatts)"))
+dev.copy(png, file ="plot2.png")
+dev.off()
